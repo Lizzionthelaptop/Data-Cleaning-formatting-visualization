@@ -15,7 +15,9 @@ Data cleaning, standardizing and analysis in Excel. Dashboard development in Tab
 
 #### **Data Source**
 
-- Kaggle 
+- ![Kaggle](https://www.kaggle.com/datasets/amruthayenikonda/dirty-dataset-to-practice-data-cleaning)
+
+![Dataset](images/dirtycafesales.png)
 
 # Process Documentation
 
@@ -56,21 +58,16 @@ Renamed **Location** column to **Order Type** since values represent the type of
 
 **Price** column contained numerical values *and* non-numerical values. Formatted valid numerical values as **currency** to make the field easier to interpret while preserving numerical data type for future calculations.
 
-Created a *Price Issue* column to document why a value was excluded from the cleaned dataset. 
+Created a *Price Issue* column to document why a value was excluded from the cleaned dataset. This formula checks if the original value is blank, "UNKNOWN", or "ERROR". 
+It leaves the cell blank if the value is invalid, otherwise fills with the original numeric value.
 
 ```json
 =IF(OR(D2="",UPPER(D2)="UNKNOWN",UPPER(D2)="ERROR"),"",D2)
-
-//This formula checks if the original value is blank, "UNKNOWN", or "ERROR". 
-//It leaves the cell blank if the value is invalid, otherwise fills with the 
-//original numeric value.
 ```
 
+This formula flags missing values as Unknown, invalid values like error as Price Issue, and leaves the cell blank when the price is Valid.
 ```json
 =IF(D2="","Unknown",IF(UPPER(D2)="ERROR","Price issue",""))
-
-//This formula flags missing values as Unknown, invalid values like error 
-// as Price Issue, and leaves the cell blank when the price is Valid.
 ```
 
 **5. Validating Total Spent and Quantity**
@@ -78,14 +75,13 @@ Updated *Total Spent* column as some fields show errors but can actually be easi
 
 ```json
 Total Spent = Quantity × Price per Unit
-//shows how much customer spent on order
 ```
-
 **Some blanks intentionally left in case we want to do calculations, we won’t have columns mixed with integers and strings, which may cause errors later on. 
 
 Highly recommend digging into unknowns or *Needs Review* to find appropriate the data.
 
 #### Result:
+![cleansafesales](images/cleansafesales.png)
 
 - Duplicate records were checked and confirmed.
 - Column names were standardized and clarified.
@@ -98,6 +94,8 @@ Highly recommend digging into unknowns or *Needs Review* to find appropriate the
 
 
 # Dashboard visualization
+
+![Dashboard](images/tableau.png)
 #### Findings
 
 1. **Which order types generate the most business?**
@@ -126,7 +124,7 @@ Highly recommend digging into unknowns or *Needs Review* to find appropriate the
 1. Which menu items have the highest sales volume?
 Coffee actually had the highest sales volume at 3,534 units. This shows that the menu item generating the most revenue is not necessarily the item with the highest sales volume. 
 
-##### Recommendations:
+#### Recommendations:
 The business seems to be performing well and consistently, but here are some areas worth investigating:
 
 - Missing, unknown, and error values to improve the accuracy of findings and provide a more complete picture of performance.
